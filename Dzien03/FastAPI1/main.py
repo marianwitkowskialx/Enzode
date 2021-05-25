@@ -26,5 +26,20 @@ async def main():
 async def get_list():
     return employees
 
+#@app.get("/item/{emp_id}", response_model=Employee,
+#         response_model_exclude={'create_ts'})
+@app.get("/item/{emp_id}", status_code=status.HTTP_200_OK)
+async def get_employee(emp_id : int, response: Response, verbose: int=0):
+    emp = list(filter(lambda x: x.id==emp_id, employees))
+    if len(emp):
+        if verbose:
+            return emp[0]
+        else:
+            return emp[0].dict(exclude={'create_ts'})
+    #response.status_code = status.HTTP_404_NOT_FOUND
+    #return {"message":"record not found"}
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail="record not found")
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

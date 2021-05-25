@@ -12,4 +12,4 @@ class User(Base):
     name = Column(String(100), index=True)
 
     def __repr__(self):
-        return f"User:{self.id}, {self.login}, {self.password}, {self.name}"
+        return f"User:{self.id} {self.login} {self.password} {self.name}|"

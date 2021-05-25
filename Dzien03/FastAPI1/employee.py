@@ -17,4 +17,4 @@ class Employee(BaseModel):
     def validate_pesel(cls, s:str):
         if len(s)==11 and s.isdigit():
             return s
-        raise ValidationError("Podaj poprawny PESEL")
+        raise ValueError("Podaj poprawny PESEL")

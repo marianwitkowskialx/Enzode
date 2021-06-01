@@ -127,3 +127,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = "movies/media_folder"
 MEDIA_URL = "/media/"
+
+# URL na potrzeby logowania userów
+LOGIN_URL = "/login" # kontrolka logowania
+LOGIN_REDIRECT_URL = "movie_list"

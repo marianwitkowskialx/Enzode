@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.conf import settings
 
 
 class Movie(models.Model):
@@ -24,10 +24,12 @@ class Movie(models.Model):
     year = models.IntegerField(null=True, blank=True, editable=False)
     imdb = models.DecimalField(null=True, blank=True, verbose_name="Ocena", max_digits=4, decimal_places=2 )
     trailer = models.URLField(null=True,blank=True, verbose_name="Link do trailera")
-    poster = models.ImageField(null=True, blank=True, verbose_name="Plakat", unique=True)
+    poster = models.ImageField(null=True, blank=True, verbose_name="Plakat", unique=False)
     mpaa_rating = models.CharField(max_length=100, choices=MPAA, default="-", verbose_name="Rating MPAA")
 
     created = models.DateTimeField(editable=False, auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                   null=True, editable=False)
 
     def __str__(self):
         return f"{self.title} - {self.year if self.year else 'BRAK DATY'}"

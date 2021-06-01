@@ -28,8 +28,13 @@ def moviedetails_response(request, id):
                   context={"movie": movie})
 
 def movieadd_response(request):
-    form = MovieForm()
-    return render(request, "movie-add-1.html",
+    form = MovieForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        movie = form.save(commit=False)
+        movie.created_by = request.user
+        movie.save()
+        return redirect(movielist_response)
+    return render(request, "movie-add-2.html",
                   context={
                       "form" : form
                   })

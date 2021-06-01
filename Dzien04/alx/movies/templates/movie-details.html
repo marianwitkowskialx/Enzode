@@ -18,6 +18,17 @@
             <a target="_blank" href="{{ media_url }}{{ movie.poster }}">Poster</a>
             {% endif %}
         </p>
+
+        <p>
+            Komentarze:
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        {{ comment.body }} - gwiazdki: {{ comment.stars }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </p>
     </li>
 
 </ul>

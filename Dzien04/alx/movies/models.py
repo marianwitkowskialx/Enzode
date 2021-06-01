@@ -1,6 +1,20 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+class Comment(models.Model):
+    body = models.TextField()
+    stars = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    created = models.DateTimeField(auto_now_add=True)
+    movie = models.ForeignKey("Movie", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.stars} - {self.body}"
+
+    class Meta:
+        verbose_name = "Komentarz"
+        verbose_name_plural = "Komentarze"
 
 
 class Movie(models.Model):

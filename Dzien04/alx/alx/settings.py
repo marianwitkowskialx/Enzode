@@ -131,3 +131,4 @@ MEDIA_URL = "/media/"
 # URL na potrzeby logowania userów
 LOGIN_URL = "/login" # kontrolka logowania
 LOGIN_REDIRECT_URL = "movie_list"
+LOGOUT_REDIRECT_URL = "/logout-done"

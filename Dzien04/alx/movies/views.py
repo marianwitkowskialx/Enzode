@@ -5,6 +5,8 @@ from .forms import *
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def startpage_response(request):
@@ -23,11 +25,17 @@ def moviedetails_response(request, id):
     #     return HttpResponse(str(movie))
     # except:
     #     raise Http404("nie ma takiego filmu")
-    movie = get_object_or_404(Movie, pk=id)
+    movie_obj = get_object_or_404(Movie, pk=id)
+    comments = Comment.objects.filter(movie=movie_obj)
     return render(request, "movie-details.html",
-                  context={"movie": movie})
+                  context={"movie": movie_obj,
+                           "comments": comments})
 
+@login_required()
 def movieadd_response(request):
+    #if not request.user.is_authenticated:
+    #    return redirect(settings.LOGIN_URL)
+
     form = MovieForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         movie = form.save(commit=False)
@@ -38,3 +46,6 @@ def movieadd_response(request):
                   context={
                       "form" : form
                   })
+
+def logout_done(request):
+    return render(request, "logout-done.html")

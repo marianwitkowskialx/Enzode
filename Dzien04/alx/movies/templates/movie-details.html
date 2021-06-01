@@ -6,10 +6,9 @@
 </head>
 <body>
 
-<h2>Lista filmów</h2>
+<h2>Film</h2>
 <ul>
 
-    {% for movie in movies %}
     <li>
         <p>
             <b>{{ movie.title }} - {{ movie.year|default_if_none:"Brak danych" }}</b><br/>
@@ -20,7 +19,6 @@
             {% endif %}
         </p>
     </li>
-    {% endfor %}
 
 </ul>
 

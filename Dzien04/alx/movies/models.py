@@ -14,13 +14,17 @@ class Movie(models.Model):
         ("PG-13","Za zgodą rodziców"),
         ("NC-17","Powyżej 17-go roku życia"),
     )
+
+    def create_path(instance, filename):
+        pass
+
     title = models.CharField(max_length=255, verbose_name="Tytuł", validators=[check_title_len])
     description = models.TextField(max_length=1024, verbose_name="Opis")
     released = models.DateField(verbose_name="Data premiery", null=True, blank=True)
     year = models.IntegerField(null=True, blank=True, editable=False)
     imdb = models.DecimalField(null=True, blank=True, verbose_name="Ocena", max_digits=4, decimal_places=2 )
     trailer = models.URLField(null=True,blank=True, verbose_name="Link do trailera")
-    poster = models.ImageField(null=True, blank=True, verbose_name="Plakat")
+    poster = models.ImageField(null=True, blank=True, verbose_name="Plakat", unique=True)
     mpaa_rating = models.CharField(max_length=100, choices=MPAA, default="-", verbose_name="Rating MPAA")
 
     created = models.DateTimeField(editable=False, auto_now_add=True)

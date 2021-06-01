@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista filmów</title>
+
+</head>
+<body style="margin:10px;">
+
+<p>
+        <b>Witaj {{ user.username }}</b>
+        <a href="{% url 'logout' %}">Logout</a>
+    </p>
+
+<form method="post" >
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  <table border="1">
+    {% for field in form.visible_fields %}
+      <tr>
+        <th>{{ field.label_tag }}</th>
+        <td>
+            <span style="color: red;">{{ field.errors }}</span>
+          {{ field }}
+          {{ field.help_text }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

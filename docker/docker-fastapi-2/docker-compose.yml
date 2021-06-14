@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+
+    api:
+        build: ./api
+        command: bash -c 'while ! nc -w 1 -z db 5432; do sleep 0.1; done; uvicorn main:app --host 0.0.0.0 --port 80'
+        environment:
+            - DATABASE_URL=postgresql://enzode_user:enzode_pass@db:5432/enzode_db
+        depends_on:
+            - db
+
+    server:
+        build: ./server
+        depends_on:
+            - api
+        ports:
+            - 8000:80
+
+    db:
+        image: postgres:13-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        expose:
+            - 5432
+        environment:
+            - POSTGRES_USER=enzode_user
+            - POSTGRES_PASSWORD=enzode_pass
+            - POSTGRES_DB=enzode_db
+
+volumes:
+  postgres_data:
+

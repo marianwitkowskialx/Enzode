@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            {{ msg }}<br/>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</p>
+
+<form method="post" action="/" enctype="multipart/form-data">
+    <p>
+        <input type="file" name="file">
+    </p>
+    <p>
+        <input type="submit" value="Prześlij">
+    </p>
+</form>
+</body>
+</html>

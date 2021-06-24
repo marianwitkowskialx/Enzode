@@ -8,7 +8,7 @@ from proxy_manager import ProxyManager
 import asyncio
 
 def get_db_conn():
-    client = motor.motor_tornado.MotorClient("mongodb://18.156.117.57:27017/")
+    client = motor.motor_tornado.MotorClient("mongodb://18.185.77.185:27017/")
     return client["mar_wit"]
 
 db_conn = get_db_conn()
@@ -19,6 +19,7 @@ app = FastAPI()
 async def boot():
     await asyncio.sleep(5)
     asyncio.create_task(proxy.set())
+    asyncio.create_task(proxy.check())
 
 if __name__ == "__main__":
     uvicorn.run("proxychecker:app", port=8000, reload=True)
